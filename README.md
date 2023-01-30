@@ -6,7 +6,7 @@
 
 </div>
 
-<p align="center"><img src="imgs/logo.png" alt="SynTegra" width="250" border="0" /></p>
+<p align="center"><img src="imgs/logo_black.png" alt="SynTegra" width="250" border="0" /></p>
 <p align="center">
 <b>A computational tool for simulation of viral synthetic integrations</b>. 
 </p>
