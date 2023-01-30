@@ -15,6 +15,8 @@
 This method provides the ability of fast simulation of viral synthetic integrations. SynTegra is implemented in C language, is flexible for multiple synthetic integration applications, and does not contain external dependencies. The tool accepts any sequences in FASTA format.
 </p>
 
+## Installation
+
 ### Conda
 Install [Miniconda](https://docs.conda.io/en/latest/miniconda.html), then run the following:
 ```bash
@@ -37,7 +39,7 @@ cmake .
 make
 </pre>
 
-## EXECUTION
+## Execution
 
 ### Run SynTegra
 
@@ -46,7 +48,7 @@ Run SynTegra tool with
 SynTegra --host host.fa --virus virus.fa > out.fasta;
 </pre>
 
-## PARAMETERS
+## Parameters
 
 To see the possible options type
 <pre>
@@ -57,17 +59,17 @@ or
 SynTegra -h
 </pre>
 
-## CITATION ##
+## Citation ##
 
 On using this software/method please cite:
 
 * pending
 
-## ISSUES ##
+## Issues ##
 
 For any issue let us know at [issues link](https://github.com/cobilab/syntegra/issues).
 
-## LICENSE ##
+## License ##
 
 GPL v3.
 
