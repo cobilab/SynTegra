@@ -89,6 +89,8 @@ void PrintParameters(PARAMETERS *M)
 
   fprintf(stderr, "[>] Verbose mode ................... %s\n", M->verbose == 0 ? 
   "no" : "yes");
+  fprintf(stderr, "[>] Line size for output ........... %"PRIu64"\n", 
+  M->line_size);
   fprintf(stderr, "[>] Seed ........................... %"PRIu64"\n", M->seed);
   fprintf(stderr, "[>] Host length .................... %"PRIu64"\n", 
   M->host_len); 
@@ -100,7 +102,10 @@ void PrintParameters(PARAMETERS *M)
   M->virus_init); 
   fprintf(stderr, "[>] Viral ending position .......... %"PRIu64"\n", 
   M->virus_end); 
-  fprintf(stderr, "[>] Integration output ............. %s\n", M->output);
+  if(M->out == 1)
+    fprintf(stderr, "[>] Integration output ............. %s\n", M->output);
+  else
+    fprintf(stderr, "[>] Integration output ............. (to stdout)\n");
   fprintf(stderr, "[>] Virus filename ................. %s\n", M->virus);
   fprintf(stderr, "[>] Host filename .................. %s\n", M->host);
 

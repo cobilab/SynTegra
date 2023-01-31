@@ -15,6 +15,7 @@ typedef struct
   U32       force;
   U32       verbose;
   U32       out;
+  U64       line_size;
   U64       seed;
   U64       host_pos;
   U64       host_len;

@@ -47,6 +47,7 @@ typedef int8_t   I8;
 #define DEF_FORCE              0
 #define DEF_VERBOSE            0
 #define DEF_THREADS            1
+#define DEF_LINE_SIZE          70
 #define BGUARD                 32
 #define ALPHABET_SIZE          4
 #define DEF_HOST_POS           0

@@ -17,6 +17,61 @@
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+void OutputSymbol(int sym, FILE *OUT, int out)
+  {
+  if(out == 0) fprintf(stdout, "%c", sym);
+  else         fprintf(OUT, "%c", sym);
+
+  return;
+  }
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+void OutputBase(int sym, FILE *OUT, int out, uint64_t idx, uint64_t ls)
+  {
+
+  if(out == 0)
+    {
+    fprintf(stdout, "%c", sym);
+    if(idx % ls == 0) fprintf(stdout, "\n");
+    }
+  else
+    {
+    fprintf(OUT, "%c", sym);
+    if(idx % ls == 0) fprintf(OUT, "\n");
+    }
+
+  return;
+  }
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+uint64_t OutputViralSeq(FILE *OUT, int out, FILE *FV, uint64_t init, 
+uint64_t end, uint64_t pos, uint64_t ls)
+  {
+  int sym;
+  uint64_t position = 1;
+  
+  while((sym = getc(FV)) != EOF)
+    {
+    if(sym == '>') // HEADER FOUND!
+      while((sym = fgetc(FV)) != EOF && sym != '\n')
+        ;
+    if(sym == EOF ) { break;    }
+    if(sym == '\n') { continue; }
+
+    if(position >= init && position <= end)
+      OutputBase(sym, OUT, out, pos, ls);
+
+    ++pos;
+    ++position;
+    }
+
+  return pos;
+  }
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 int32_t main(int c, char *argv[])
   {
   char **p = *&argv;
@@ -37,6 +92,8 @@ int32_t main(int c, char *argv[])
 
   MAP->help       = ArgsState(DEF_HELP, p, c, "-h",  "--help");
   MAP->verbose    = ArgsState(DEF_VERBOSE, p, c, "-v",  "--verbose");
+  MAP->line_size  = ArgsNum(DEF_LINE_SIZE, p, c, "-l", "--line-size", 
+		    10, 1000000);
   MAP->seed       = ArgsNum(time(NULL), p, c, "-s", "--seed", 
 		    0, 9999999999);
   MAP->host_pos   = ArgsNum(DEF_HOST_POS, p, c, "-p", "--host-position",
@@ -61,8 +118,6 @@ int32_t main(int c, char *argv[])
       MAP->out = 1;
       break;
       }
-  if(MAP->out == 0)
-    MAP->output = CloneString(Cat("integrated-", MAP->host));
 
   if(MAP->verbose) fprintf(stderr, "[>] Starting %s ...\n", PNAME);
   
@@ -87,20 +142,42 @@ int32_t main(int c, char *argv[])
 
   if(MAP->verbose) fprintf(stderr, "[>] Starting integration ...\n");
 
-  // PRINT HEADER
-  // if(MAP->fasta) fprintf(stdout, ">Extracted sequence [%"PRIu64";%"PRIu64"]\n",
-  //               MAP->init, MAP->end);
+  FH = Fopen(MAP->host,  "r");
+  FV = Fopen(MAP->virus, "r");
+ 
+  FILE *OUT = NULL;
+  if(MAP->out == 1)
+    OUT = Fopen(MAP->output, "w");
 
-  //Extract(MAP);
+  int sym;
+  uint64_t position = 1;
+  while((sym = getc(FH)) != EOF)
+    {
+    if(sym == '>') // HEADER FOUND!
+      {
+      OutputSymbol(sym, OUT, MAP->out);
+      while((sym = fgetc(FH)) != EOF && sym != '\n')
+        OutputSymbol(sym, OUT, MAP->out);
+      OutputSymbol(sym, OUT, MAP->out);
+      continue;
+      }
+    if(sym == EOF ) { OutputSymbol(sym, OUT, MAP->out); break;    }
+    if(sym == '\n') { continue; }
 
-  // PRINT TAIL
-  fprintf(stdout, "\n");
+    if(position == MAP->host_pos)
+      {
+      position = OutputViralSeq(OUT, MAP->out, FV, MAP->virus_init, 
+		 MAP->virus_end, position, MAP->line_size);
+      }
+
+    OutputBase(sym, OUT, MAP->out, position, MAP->line_size);
+    ++position;
+    }
+  
+  fclose(FH);
+  if(MAP->out == 1) fclose(OUT);
 
   if(MAP->verbose) fprintf(stderr, "[>] Done!\n");
-
-
-  
-
 
   return EXIT_SUCCESS;
   }
