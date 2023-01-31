@@ -49,7 +49,9 @@ typedef int8_t   I8;
 #define DEF_THREADS            1
 #define BGUARD                 32
 #define ALPHABET_SIZE          4
-
+#define DEF_HOST_POS           0
+#define DEF_VIRAL_INI          0
+#define DEF_VIRAL_END          99999999
 #define MIN_NPARAM_FOR_PROGS   2
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

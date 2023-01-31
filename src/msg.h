@@ -5,6 +5,7 @@
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+void PrintError      (char *);
 void PrintWarning    (char *);
 void PrintMessage    (char *);
 void PrintVersion    (void);

@@ -14,15 +14,16 @@
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-uint32_t ArgsNum(uint32_t d, char *a[], uint32_t n, char *s, char *s2,
-uint32_t l, uint32_t u)
+uint64_t ArgsNum(uint64_t d, char *a[], uint32_t n, char *s, char *s2,
+uint64_t l, uint64_t u)
   {
-  uint32_t x;
+  uint64_t x;
   for( ; --n ; ) if(!strcmp(s, a[n]) || !strcmp(s2, a[n]))
     {
     if((x = atol(a[n+1])) < l || x > u)
       {
-      fprintf(stderr, "[x] Invalid number! Interval: [%u;%u].\n", l, u);
+      fprintf(stderr, "[x] Invalid number! Interval: [%"PRIu64";%"PRIu64"].\n", 
+      l, u);
       exit(EXIT_FAILURE);
       }
     return x;
@@ -88,7 +89,21 @@ void PrintParameters(PARAMETERS *M)
 
   fprintf(stderr, "[>] Verbose mode ................... %s\n", M->verbose == 0 ? 
   "no" : "yes");
-  
+  fprintf(stderr, "[>] Seed ........................... %"PRIu64"\n", M->seed);
+  fprintf(stderr, "[>] Host length .................... %"PRIu64"\n", 
+  M->host_len); 
+  fprintf(stderr, "[>] Virus length ................... %"PRIu64"\n", 
+  M->virus_len); 
+  fprintf(stderr, "[>] Host integration position ...... %"PRIu64"\n", 
+  M->host_pos);
+  fprintf(stderr, "[>] Viral initial position ......... %"PRIu64"\n", 
+  M->virus_init); 
+  fprintf(stderr, "[>] Viral ending position .......... %"PRIu64"\n", 
+  M->virus_end); 
+  fprintf(stderr, "[>] Integration output ............. %s\n", M->output);
+  fprintf(stderr, "[>] Virus filename ................. %s\n", M->virus);
+  fprintf(stderr, "[>] Host filename .................. %s\n", M->host);
+
   return;
   }
 
