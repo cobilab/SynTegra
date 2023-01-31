@@ -11,6 +11,6 @@ SET(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 SET(RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 SET(CMAKE_BUILD_TYPE Release)
 
-add_executable (SynTegra syntegra.c rand.c dna.c buffer.c param.c strings.c mem.c msg.c common.c threads.h defs.h) 
+add_executable (SynTegra syntegra.c dna.c buffer.c param.c strings.c mem.c msg.c common.c defs.h) 
 
-TARGET_LINK_LIBRARIES(SynTegra pthread)
+TARGET_LINK_LIBRARIES(SynTegra)
