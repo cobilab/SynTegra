@@ -11,7 +11,6 @@
 #include "msg.h"
 #include "mem.h"
 #include "dna.h"
-#include "rand.h"
 #include "param.h"
 #include "common.h"
 #include "strings.h"
