@@ -135,7 +135,8 @@ int32_t main(int c, char *argv[])
   if(MAP->virus_end > MAP->virus_len)
     {
     MAP->virus_end = MAP->virus_len;
-    PrintWarning("Virus end position has been adjusted to the length");
+    PrintWarning("Virus end position has been adjusted to the length.");
+    PrintWarning("Notice that this is a normal behaviour if end position was not specified.");
     }
 
   if(MAP->verbose) PrintParameters(MAP);
